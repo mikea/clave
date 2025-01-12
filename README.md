@@ -10,6 +10,11 @@ Note: click tracks are percussion in their nature.
 Because of this clave does not generate note off events
 (only note on).
 
+## Pregenerated Tracks
+
+A lot of pregenerated tracks are available
+in [tracks](https://github.com/mikea/clave/tree/master/tracks) folder.
+
 ## Installation
 
 `cargo install clave`
