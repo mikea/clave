@@ -1,3 +1,5 @@
+![Crates.io Version](https://img.shields.io/crates/v/clave)
+
 # Clave
 
 Clave is a midi click-track generator. 
