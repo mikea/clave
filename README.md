@@ -53,7 +53,7 @@ metronome click with accented first beat.
 
 Some usefull patterns are:
 
-| Description | `--subs` | `-p`
+| Description | Subs | Pattern
 |---|---|--|
 |4/4 with ghost 8th| `2` | `"m>m, mm, mm, mm,"`
 |Son clave 3-2| `2` | `"cr rc rr cr  rr cr cr rr"`
