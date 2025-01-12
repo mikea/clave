@@ -2,9 +2,9 @@
 
 Clave is a midi click-track generator. 
 It generates single-track single-channel midi file
-with a click pattern.
+with a customizable click pattern.
 
-Note: clave tracks are percussion by its nature. 
+Note: click tracks are percussion in their nature. 
 Because of this clave does not generate note off events
 (only note on).
 
@@ -55,9 +55,9 @@ Some usefull patterns are:
 
 | Description | Subs | Pattern
 |---|---|--|
-|4/4 with ghost 8th| `2` | `"m>m, mm, mm, mm,"`
-|Son clave 3-2| `2` | `"cr rc rr cr  rr cr cr rr"`
-|Son clave 2-3|  `2` | `"rr cr cr rr  cr rc rr cr"`
-|Rumba clave 3-2| `2` | `"cr rc rr rc  rr cr cr rr"`
-|Rumba clave 2-3| `2` | `"rr cr cr rr  cr rc rr rc"`
-|Cascara 2-3| `2` | `"h>r h>r hh> rh h>r hh> rh> rh"`
+|4/4 with ghost 8th| `2` | `"m>m,mm,mm,mm,"`
+|Son clave 3-2| `2` | `"crrcrrcrrrcrcrrr"`
+|Son clave 2-3|  `2` | `"rrcrcrrrcrrcrrcr"`
+|Rumba clave 3-2| `2` | `"crrcrrrcrrcrcrrr"`
+|Rumba clave 2-3| `2` | `"rrcrcrrrcrrcrrrc"`
+|Cascara 2-3| `2` | `"h>rh>rhh>rhh>rhh>rh>rh"`
