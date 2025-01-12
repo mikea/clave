@@ -2,6 +2,8 @@
 name = "clave"
 version = "0.1.0"
 edition = "2021"
+description = "Clave is midi click-track generator"
+license = "MIT"
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
