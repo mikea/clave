@@ -1,6 +1,6 @@
 [package]
 name = "clave"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Clave is midi click-track generator"
 license = "MIT"
@@ -8,3 +8,4 @@ license = "MIT"
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 midly = { version = "0" }
+regex = { version = "1" }
