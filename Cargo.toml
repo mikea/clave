@@ -1,8 +1,8 @@
 [package]
 name = "clave"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
-description = "Clave is midi click-track generator"
+description = "Midi click-track generator"
 license = "MIT"
 
 [dependencies]

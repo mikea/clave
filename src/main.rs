@@ -6,32 +6,41 @@ use regex::Regex;
 
 #[derive(Parser, Debug)]
 struct Args {
+    /// Output file
     #[arg(short, long)]
     out: PathBuf,
 
+    /// Track tempo (beats per minute)
     #[arg(short, long, default_value_t = 120)]
     bpm: u16,
 
-    #[arg(short, long, default_value_t = String::from("m>mmm"))]
-    pattern: String,
-
+    /// Midi channel
     #[arg(long, default_value_t = 10)]
     channel: u8,
 
-    #[arg(long, default_value_t = 10_000)]
+    /// Track length in number of beats
+    #[arg(long, default_value_t = 1_000)]
     beats: usize,
 
+    /// Default note velocity
     #[arg(long, default_value_t = 63)]
     vel: u8,
 
-    #[arg(long, default_value_t = 127)]
+    /// Accented note velocity
+    #[arg(long, default_value_t = 94)]
     acc_vel: u8,
 
+    /// Ghost note velocity
     #[arg(long, default_value_t = 31)]
     ghost_vel: u8,
 
+    /// Number of subdivisions in a pattern
     #[arg(long, default_value_t = 1)]
     subs: u16,
+
+    /// Click pattern
+    #[arg(short, long, default_value_t = String::from("m>mmm"))]
+    pattern: String,
 }
 
 fn main() {
@@ -68,7 +77,7 @@ impl Args {
 
         let mut events = vec![set_tempo];
         let mut d = 0;
-        for i in 0..self.beats {
+        for i in 0..(self.beats * self.subs as usize) {
             let item = &pattern[i % pattern.len()];
             match item {
                 PatternItem::Rest => d += delta,
@@ -103,7 +112,7 @@ impl Args {
     }
 
     fn parse_pattern(&self) -> Vec<PatternItem> {
-        let re = Regex::new(r"[cmr][>]?").expect("bad regexp");
+        let re = Regex::new(r"[cmrh][>,]?").expect("bad regexp");
         let mut events = vec![];
 
         for cap in re.captures_iter(&self.pattern) {
@@ -115,10 +124,13 @@ impl Args {
             let key = match cap.chars().next().unwrap() {
                 'm' => 32,
                 'c' => 75,
+                'h' => 42,
                 _ => unimplemented!("bad key: {cap:?}"),
             };
             let vel = if cap.ends_with(">") {
                 self.acc_vel
+            } else if cap.ends_with(",") {
+                self.ghost_vel
             } else {
                 self.vel
             };
