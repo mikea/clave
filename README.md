@@ -60,4 +60,4 @@ Some usefull patterns are:
 |Son clave 2-3|`--subs 2 -p "rr cr cr rr  cr rc rr cr"`
 |Rumba clave 3-2|`--subs 2 -p "cr rc rr rc  rr cr cr rr"`
 |Rumba clave 2-3|`--subs 2 -p "rr cr cr rr  cr rc rr rc"`
-|Cascara 2-3|`--subs 2 -p "h>r h>r hh> rh h>r hh> rh rh"`
+|Cascara 2-3|`--subs 2 -p "h>r h>r hh> rh h>r hh> rh> rh"`
