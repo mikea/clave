@@ -1,4 +1,3 @@
-use core::panic;
 use std::{fs::File, io::BufWriter, path::PathBuf};
 
 use clap::Parser;
@@ -17,7 +16,7 @@ struct Args {
     pattern: String,
 
     #[arg(long, default_value_t = 10)]
-    channel: i8,
+    channel: u8,
 
     #[arg(long, default_value_t = 10_000)]
     beats: usize,
@@ -30,6 +29,9 @@ struct Args {
 
     #[arg(long, default_value_t = 31)]
     ghost_vel: u8,
+
+    #[arg(long, default_value_t = 1)]
+    subs: u16,
 }
 
 fn main() {
@@ -40,16 +42,12 @@ fn main() {
 impl Args {
     fn main(&self) {
         assert!(self.channel > 0, "channel needs to be >0");
-
-        let ticks_per_beat = 96;
-        let delta = 96u32;
-        let channel = 9.into();
+        let channel = (self.channel - 1) as u8;
+        let ticks_per_beat = self.subs;
+        let delta = 1;
 
         let tempo = 60.0 * 1_000_000.0 / (self.bpm as f64);
         let tempo = tempo as u32;
-
-        let bpm = 60.0 * 1_000_000.0 / (tempo as f64);
-        println!("effective bpm: {bpm}");
 
         let header = Header {
             format: midly::Format::SingleTrack,
@@ -78,7 +76,7 @@ impl Args {
                     events.push(TrackEvent {
                         delta: d.into(),
                         kind: midly::TrackEventKind::Midi {
-                            channel,
+                            channel: channel.into(),
                             message: midly::MidiMessage::NoteOn {
                                 key: (*key).into(),
                                 vel: (*vel).into(),
