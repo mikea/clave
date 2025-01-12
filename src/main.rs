@@ -2,7 +2,9 @@ use std::{fs::File, io::BufWriter, path::PathBuf};
 
 use clap::Parser;
 use midly::{Header, TrackEvent};
-use regex::Regex;
+use pattern::PatternItem;
+
+mod pattern;
 
 #[derive(Parser, Debug)]
 struct Args {
@@ -73,7 +75,7 @@ impl Args {
             kind: midly::TrackEventKind::Meta(midly::MetaMessage::EndOfTrack),
         };
 
-        let pattern = self.parse_pattern();
+        let pattern = pattern::parse(&self.pattern);
 
         let mut events = vec![set_tempo];
         let mut d = 0;
@@ -88,7 +90,7 @@ impl Args {
                             channel: channel.into(),
                             message: midly::MidiMessage::NoteOn {
                                 key: (*key).into(),
-                                vel: (*vel).into(),
+                                vel: self.vel(&vel),
                             },
                         },
                     });
@@ -110,38 +112,14 @@ impl Args {
             midly::write_std(&header, tracks, &mut writer).expect("error writing file");
         }
     }
-
-    fn parse_pattern(&self) -> Vec<PatternItem> {
-        let re = Regex::new(r"[cmrh][>,]?").expect("bad regexp");
-        let mut events = vec![];
-
-        for cap in re.captures_iter(&self.pattern) {
-            let cap = cap.get(0).unwrap().as_str();
-            if cap.starts_with("r") {
-                events.push(PatternItem::Rest);
-                continue;
-            }
-            let key = match cap.chars().next().unwrap() {
-                'm' => 32,
-                'c' => 75,
-                'h' => 42,
-                _ => unimplemented!("bad key: {cap:?}"),
-            };
-            let vel = if cap.ends_with(">") {
-                self.acc_vel
-            } else if cap.ends_with(",") {
-                self.ghost_vel
-            } else {
-                self.vel
-            };
-            events.push(PatternItem::Note { key, vel });
+    
+    fn vel(&self, vel: &pattern::Velocity) -> midly::num::u7 {
+        match vel {
+            pattern::Velocity::Default => self.vel.into(),
+            pattern::Velocity::Accented => self.acc_vel.into(),
+            pattern::Velocity::Ghost => self.ghost_vel.into(),
         }
-        assert!(!events.is_empty(), "bad pattern: {}", self.pattern);
-        events
+
     }
 }
 
-enum PatternItem {
-    Rest,
-    Note { key: u8, vel: u8 },
-}

@@ -1,5 +1,5 @@
 This directory contains pregenerated click tracks for
-common patterns with different bpms for the practice.
+common patterns with different bpms ready for practice.
 
 |Folder|Pattern|
 |--|--|
