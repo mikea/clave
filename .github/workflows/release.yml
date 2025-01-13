@@ -44,7 +44,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pkl test
+          cargo test
 
       - name: Release
         env:
