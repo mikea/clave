@@ -24,21 +24,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Pkl
-        uses: pkl-community/setup-pkl@v0
-        with:
-          pkl-version: "0.27.1"
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
 
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install --no-install-recommends --no-upgrade -y just
-          
       - name: Install semenatic-release dependencies
         run: |
           npm install \
