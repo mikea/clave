@@ -53,7 +53,7 @@ fn main() {
 impl Args {
     fn main(&self) {
         assert!(self.channel > 0, "channel needs to be >0");
-        let channel = (self.channel - 1) as u8;
+        let channel = self.channel - 1;
         let ticks_per_beat = self.subs;
         let delta = 1;
 
@@ -90,7 +90,7 @@ impl Args {
                             channel: channel.into(),
                             message: midly::MidiMessage::NoteOn {
                                 key: (*key).into(),
-                                vel: self.vel(&vel),
+                                vel: self.vel(vel),
                             },
                         },
                     });
@@ -112,14 +112,12 @@ impl Args {
             midly::write_std(&header, tracks, &mut writer).expect("error writing file");
         }
     }
-    
+
     fn vel(&self, vel: &pattern::Velocity) -> midly::num::u7 {
         match vel {
             pattern::Velocity::Default => self.vel.into(),
             pattern::Velocity::Accented => self.acc_vel.into(),
             pattern::Velocity::Ghost => self.ghost_vel.into(),
         }
-
     }
 }
-

@@ -17,17 +17,19 @@ pub(crate) fn parse(s: &str) -> Vec<PatternItem> {
     parser().parse(s).expect("bad pattern")
 }
 
-fn parser<'a>() -> impl Parser<char, Vec<PatternItem>, Error = Cheap<char>> {
-    // note
+fn parser() -> impl Parser<char, Vec<PatternItem>, Error = Cheap<char>> {
+    // key 
     let m = just('m').to(32);
     let c = just('c').to(75);
     let h = just('h').to(42);
     let key = choice((m, c, h));
 
+    // velocity
     let acc = just('>').to(Velocity::Accented);
     let ghost = just(',').to(Velocity::Ghost);
     let vel = acc.or(ghost).or_else(|_| Ok(Velocity::Default));
 
+    // note
     let note = key
         .then(vel)
         .map(|(key, vel)| PatternItem::Note { key, vel });
