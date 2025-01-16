@@ -11,4 +11,4 @@ repository = "https://github.com/mikea/clave"
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 midly = { version = "0" }
-chumsky = { version = "0"}
+nom = { version = "8"}

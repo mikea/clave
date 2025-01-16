@@ -47,18 +47,22 @@ more sophisticated click patterns:
 
 - the pattern consists of pattern items optionally separated by spaces
 - each pattern item consists of the note:
-    - `m` - metronome click
-    - `c` - clave click
-    - `h` - closed hi-hat
+    - `m` - metronome click (32)
+    - `c` - clave click (75)
+    - `b` - bass drum (35)
+    - `s` - snare (38)
+    - `h` - closed hi-hat (42)
+    - `XX` or `XXX` - decimal number of the percussion key (https://en.wikipedia.org/wiki/General_MIDI#Percussion)
     - `r` - rest
 - and optional volume modifier:
     - `>` - accented note
     - `,` - ghost note
+- multiple notes can be played as a chord simultaneosly by surrounding them with `(` `)`.
 
 Default pattern is `m>mmm` which corresponds to 4/4
 metronome click with accented first beat.
 
-Some usefull patterns are:
+### Pattern Examples
 
 | Description | Subs | Pattern
 |---|---|--|
@@ -68,3 +72,6 @@ Some usefull patterns are:
 |Rumba clave 3-2| `2` | `"crrcrrrcrrcrcrrr"`
 |Rumba clave 2-3| `2` | `"rrcrcrrrcrrcrrrc"`
 |Cascara 2-3| `2` | `"h>rh>rhh>rhh>rhh>rh>rh"`
+|Rock 4/4| `2` | `"(bh)h(sh)h(bh)h(sh)h"`
+|Funk 4/4| `4` | `"(bh)h>hb s>rhh> bhh>b (s>h>)r(s>h>)r"`
+|Funk with Ghost Notes| `4` | `"(bh)s,hs> hs,hs, hs,(bh)r (s>h)rhr"`

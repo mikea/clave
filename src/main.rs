@@ -1,3 +1,5 @@
+#![deny(clippy::pedantic)]
+
 use std::{fs::File, io::BufWriter, path::PathBuf};
 
 use clap::Parser;
@@ -57,8 +59,9 @@ impl Args {
         let ticks_per_beat = self.subs;
         let delta = 1;
 
-        let tempo = 60.0 * 1_000_000.0 / (self.bpm as f64);
-        let tempo = tempo as u32;
+        #[allow(clippy::cast_possible_truncation)]
+        #[allow(clippy::cast_sign_loss)]
+        let tempo = (60.0 * 1_000_000.0 / f64::from(self.bpm)) as u32;
 
         let header = Header {
             format: midly::Format::SingleTrack,
@@ -75,7 +78,7 @@ impl Args {
             kind: midly::TrackEventKind::Meta(midly::MetaMessage::EndOfTrack),
         };
 
-        let pattern = pattern::parse(&self.pattern);
+        let pattern = pattern::parse(&self.pattern).unwrap();
 
         let mut events = vec![set_tempo];
         let mut d = 0;
@@ -83,17 +86,20 @@ impl Args {
             let item = &pattern[i % pattern.len()];
             match item {
                 PatternItem::Rest => d += delta,
-                PatternItem::Note { key, vel } => {
-                    events.push(TrackEvent {
-                        delta: d.into(),
-                        kind: midly::TrackEventKind::Midi {
-                            channel: channel.into(),
-                            message: midly::MidiMessage::NoteOn {
-                                key: (*key).into(),
-                                vel: self.vel(vel),
+                PatternItem::Notes(notes) => {
+                    for note in notes {
+                        events.push(TrackEvent {
+                            delta: d.into(),
+                            kind: midly::TrackEventKind::Midi {
+                                channel: channel.into(),
+                                message: midly::MidiMessage::NoteOn {
+                                    key: note.key.into(),
+                                    vel: self.vel(&note.vel),
+                                },
                             },
-                        },
-                    });
+                        });
+                        d = 0;
+                    }
                     d = delta;
                 }
             };
@@ -101,8 +107,8 @@ impl Args {
         events.push(end_of_track);
 
         let mut track = Vec::with_capacity(events.len());
-        for e in events.iter() {
-            track.push(e)
+        for e in &events {
+            track.push(e);
         }
         let tracks = vec![track];
 
