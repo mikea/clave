@@ -33,3 +33,6 @@ tracks: build-release
 
 build-release:
     cargo build -r
+
+release VERSION:
+    sed -i 's/version = ".*"/version = "{{VERSION}}"/' file.txt

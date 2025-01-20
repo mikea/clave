@@ -1,6 +1,12 @@
 {
     "plugins": [
         [
+            "@semantic-release/exec",
+            {
+                "prepare": "just release ${nextRelease.version}"
+            }
+        ],
+        [
             "@semantic-release/commit-analyzer", 
             {
                 "preset": "conventionalcommits",
