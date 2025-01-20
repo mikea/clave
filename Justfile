@@ -36,4 +36,4 @@ build-release:
 
 prepare-release VERSION:
     echo "Preparing release {{VERSION}}"
-    sed -i 's/version = ".*"/version = "{{VERSION}}"/' Justfile
+    sed -i 's/^version = "0.0.0"/version = "{{VERSION}}"/' Cargo.toml
