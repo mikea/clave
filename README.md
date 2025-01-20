@@ -68,4 +68,3 @@ Some usefull patterns are:
 |Rumba clave 3-2| `2` | `"crrcrrrcrrcrcrrr"`
 |Rumba clave 2-3| `2` | `"rrcrcrrrcrrcrrrc"`
 |Cascara 2-3| `2` | `"h>rh>rhh>rhh>rhh>rh>rh"`
-
