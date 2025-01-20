@@ -30,6 +30,11 @@ jobs:
         with:
           node-version: "lts/*"
 
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install --no-install-recommends --no-upgrade -y just
+      
       - name: Install semenatic-release dependencies
         run: |
           npm install \
