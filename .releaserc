@@ -3,7 +3,7 @@
         [
             "@semantic-release/exec",
             {
-                "prepare": "just release ${nextRelease.version}"
+                "prepare": "just prepare-release ${nextRelease.version}"
             }
         ],
         [

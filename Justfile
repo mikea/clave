@@ -34,5 +34,6 @@ tracks: build-release
 build-release:
     cargo build -r
 
-release VERSION:
-    sed -i 's/version = ".*"/version = "{{VERSION}}"/' file.txt
+prepare-release VERSION:
+    echo "Preparing release {{VERSION}}"
+    sed -i 's/version = ".*"/version = "{{VERSION}}"/' Justfile
