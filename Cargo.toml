@@ -6,9 +6,11 @@ description = "Midi click-track generator"
 license = "MIT"
 rust-version = "1.89"
 repository = "https://github.com/mikea/clave"
+exclude = ["tracks/", ".*", "Justfile"]
 
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 midly = { version = "0" }
 nom = { version = "8"}
+
