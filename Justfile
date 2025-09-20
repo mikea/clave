@@ -6,6 +6,9 @@ watch +WATCH_TARGET='run':
 test:
     cargo test
     
+clippy:
+    cargo clippy
+
 run:
     cargo run -- --bpm 180 --out target/4_4.mid 
     cargo run -- --bpm 180 --subs 2 --out target/clave23.mid --pattern "rrcrcrrrcrrcrrcr"

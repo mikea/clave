@@ -102,7 +102,7 @@ impl Args {
                     }
                     d = delta;
                 }
-            };
+            }
         }
         events.push(end_of_track);
 
