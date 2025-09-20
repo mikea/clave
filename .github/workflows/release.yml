@@ -34,7 +34,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install --no-install-recommends --no-upgrade -y just
-      
+
       - name: Install semenatic-release dependencies
         run: |
           npm install \
@@ -45,7 +45,7 @@ jobs:
             @semantic-release/commit-analyzer \
             @semantic-release/release-notes-generator \
             conventional-changelog-conventionalcommits \
-            @semantic-release-cargo/semantic-release-cargo@2.3.80 \
+            @semantic-release-cargo/semantic-release-cargo@ \
             -D
 
       - name: Run tests
